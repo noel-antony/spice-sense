@@ -1,1 +1,11 @@
 .vercel
+# Firebase service account key (KEEP SECRET!)
+serviceAccountKey.json
+**/serviceAccountKey.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.db
+.env
+venv/

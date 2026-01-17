@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌶️ Spice Sense - Login</title>
+    <style>
+        :root {
+            --bg-dark: #1a1a2e;
+            --bg-card: #16213e;
+            --accent: #e94560;
+            --success: #00d9ff;
+            --warning: #ffc107;
+            --text: #eee;
+            --text-dim: #888;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .login-container {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo p {
+            color: var(--text-dim);
+            margin-top: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            margin-top: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(233, 69, 96, 0.1);
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .divider span {
+            background: var(--bg-card);
+            padding: 0 15px;
+            position: relative;
+            color: var(--text-dim);
+        }
+        
+        .error-message {
+            background: rgba(233, 69, 96, 0.2);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .success-message {
+            background: rgba(0, 217, 255, 0.2);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .user-info {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 217, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .user-info .email {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+        
+        .user-info .role {
+            color: var(--text-dim);
+            margin-top: 5px;
+        }
+        
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .links a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .links a:hover {
+            text-decoration: underline;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>🌶️ Spice Sense</h1>
+            <p>Supply Chain Traceability</p>
+        </div>
+        
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message"></div>
+        
+        <!-- Logged In View -->
+        <div id="loggedInView" class="hidden">
+            <div class="user-info" style="display: block;">
+                <div class="email" id="userEmail"></div>
+                <div class="role">Role: <span id="userRole"></span></div>
+            </div>
+            <button onclick="goToDashboard()" class="btn btn-primary">Go to Dashboard</button>
+            <button onclick="goToTraceability()" class="btn btn-secondary">Traceability Portal</button>
+            <button onclick="logout()" class="btn btn-secondary" style="margin-top: 20px; border-color: #666; color: #666;">Logout</button>
+        </div>
+        
+        <!-- Login Form -->
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+        
+        <div id="loginLinks" class="links">
+            <p>Don't have an account? Contact your administrator.</p>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD1Mi4mYgd7ADZXJh7v6OKrxBnaPQjBoic",
+            authDomain: "spice-sense-69.firebaseapp.com",
+            projectId: "spice-sense-69",
+            storageBucket: "spice-sense-69.firebasestorage.app",
+            messagingSenderId: "726037644227",
+            appId: "1:726037644227:web:5073b5852aa0cb00bfb376"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        
+        // Backend URL
+        const BACKEND_URL = 'https://spice-purity-server.onrender.com';
+        const TRACEABILITY_URL = 'http://localhost:5001'; // Update this when deployed
+        
+        // Check if already logged in
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                showLoggedInView(user);
+            } else {
+                showLoginForm();
+            }
+        });
+        
+        async function showLoggedInView(user) {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('loginLinks').classList.add('hidden');
+            document.getElementById('loggedInView').classList.remove('hidden');
+            document.getElementById('userEmail').textContent = user.email;
+            
+            // Get role from token
+            const token = await user.getIdToken();
+            const tokenResult = await user.getIdTokenResult();
+            const role = tokenResult.claims.role || 'viewer';
+            document.getElementById('userRole').textContent = role.toUpperCase();
+            
+            // Store token for other pages
+            localStorage.setItem('authToken', token);
+            localStorage.setItem('userRole', role);
+            localStorage.setItem('userEmail', user.email);
+        }
+        
+        function showLoginForm() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('loginLinks').classList.remove('hidden');
+            document.getElementById('loggedInView').classList.add('hidden');
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userRole');
+            localStorage.removeItem('userEmail');
+        }
+        
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            hideMessages();
+            
+            try {
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                showSuccess('Login successful! Redirecting...');
+                
+                // Token is automatically handled by onAuthStateChanged
+            } catch (error) {
+                console.error('Login error:', error);
+                showError(getErrorMessage(error.code));
+            }
+        }
+        
+        function logout() {
+            auth.signOut().then(() => {
+                showSuccess('Logged out successfully');
+                showLoginForm();
+            });
+        }
+        
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+        
+        function goToTraceability() {
+            window.location.href = 'traceability.html';
+        }
+        
+        function showError(message) {
+            const el = document.getElementById('errorMessage');
+            el.textContent = message;
+            el.style.display = 'block';
+        }
+        
+        function showSuccess(message) {
+            const el = document.getElementById('successMessage');
+            el.textContent = message;
+            el.style.display = 'block';
+        }
+        
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+        
+        function getErrorMessage(code) {
+            switch (code) {
+                case 'auth/user-not-found':
+                    return 'No account found with this email.';
+                case 'auth/wrong-password':
+                    return 'Incorrect password.';
+                case 'auth/invalid-email':
+                    return 'Invalid email address.';
+                case 'auth/user-disabled':
+                    return 'This account has been disabled.';
+                case 'auth/too-many-requests':
+                    return 'Too many failed attempts. Please try again later.';
+                default:
+                    return 'Login failed. Please check your credentials.';
+            }
+        }
+    </script>
+</body>
+</html>

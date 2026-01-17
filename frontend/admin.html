@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌶️ Spice Sense - Admin Panel</title>
+    <style>
+        :root {
+            --bg-dark: #1a1a2e;
+            --bg-card: #16213e;
+            --accent: #e94560;
+            --success: #00d9ff;
+            --warning: #ffc107;
+            --text: #eee;
+            --text-dim: #888;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--text-dim);
+            color: var(--text-dim);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .card h2 {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .users-table th,
+        .users-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .users-table th {
+            color: var(--text-dim);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+        
+        .users-table tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .role-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .role-admin { background: rgba(233, 69, 96, 0.2); color: #e94560; }
+        .role-farmer { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+        .role-processor { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+        .role-tester { background: rgba(0, 217, 255, 0.2); color: #00d9ff; }
+        .role-distributor { background: rgba(156, 39, 176, 0.2); color: #9c27b0; }
+        .role-retailer { background: rgba(255, 152, 0, 0.2); color: #ff9800; }
+        .role-viewer { background: rgba(158, 158, 158, 0.2); color: #9e9e9e; }
+        
+        .role-select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        
+        .role-select option {
+            background: var(--bg-card);
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            border-radius: 6px;
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: var(--bg-dark);
+        }
+        
+        .btn-danger {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+        
+        .stat-card .label {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-dim);
+        }
+        
+        .error-message {
+            background: rgba(233, 69, 96, 0.2);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .success-message {
+            background: rgba(0, 217, 255, 0.2);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Create User Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .modal-content h3 {
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .modal-actions .btn {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>👑 Admin Panel</h1>
+        <div class="header-actions">
+            <button onclick="openCreateModal()" class="btn btn-primary">+ Create User</button>
+            <button onclick="loadUsers()" class="btn btn-secondary">↻ Refresh</button>
+            <button onclick="goBack()" class="btn btn-secondary">← Back</button>
+        </div>
+    </div>
+    
+    <div id="errorMessage" class="error-message hidden"></div>
+    <div id="successMessage" class="success-message hidden"></div>
+    
+    <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+            <div class="number" id="totalUsers">-</div>
+            <div class="label">Total Users</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="adminCount">-</div>
+            <div class="label">Admins</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="farmerCount">-</div>
+            <div class="label">Farmers</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="testerCount">-</div>
+            <div class="label">Testers</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2>👥 User Management</h2>
+        <div id="usersLoading" class="loading">Loading users...</div>
+        <table class="users-table hidden" id="usersTable">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Current Role</th>
+                    <th>Change Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="usersBody">
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Create User Modal -->
+    <div class="modal" id="createModal">
+        <div class="modal-content">
+            <h3>Create New User</h3>
+            <form onsubmit="createUser(event)">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="newEmail" required placeholder="user@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="newPassword" required minlength="6" placeholder="Min 6 characters">
+                </div>
+                <div class="form-group">
+                    <label>Display Name</label>
+                    <input type="text" id="newName" required placeholder="Full Name">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="newRole">
+                        <option value="viewer">Viewer</option>
+                        <option value="farmer">Farmer</option>
+                        <option value="processor">Processor</option>
+                        <option value="tester">Tester</option>
+                        <option value="distributor">Distributor</option>
+                        <option value="retailer">Retailer</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" onclick="closeCreateModal()" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD1Mi4mYgd7ADZXJh7v6OKrxBnaPQjBoic",
+            authDomain: "spice-sense-69.firebaseapp.com",
+            projectId: "spice-sense-69",
+            storageBucket: "spice-sense-69.firebasestorage.app",
+            messagingSenderId: "726037644227",
+            appId: "1:726037644227:web:5073b5852aa0cb00bfb376"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        
+        // API URL
+        const API_URL = 'http://localhost:5001'; // Update when deployed
+        
+        let currentToken = null;
+        
+        // Check auth on load
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const tokenResult = await user.getIdTokenResult();
+            if (tokenResult.claims.role !== 'admin') {
+                showError('Access denied. Admin only.');
+                setTimeout(() => window.location.href = 'login.html', 2000);
+                return;
+            }
+            
+            currentToken = await user.getIdToken();
+            loadUsers();
+        });
+        
+        async function loadUsers() {
+            document.getElementById('usersLoading').classList.remove('hidden');
+            document.getElementById('usersTable').classList.add('hidden');
+            
+            try {
+                const response = await fetch(`${API_URL}/api/auth/users`, {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load users');
+                }
+                
+                const data = await response.json();
+                renderUsers(data.users);
+                updateStats(data.users);
+                
+            } catch (error) {
+                console.error('Error loading users:', error);
+                showError('Failed to load users. Make sure the API server is running.');
+            }
+        }
+        
+        function renderUsers(users) {
+            const tbody = document.getElementById('usersBody');
+            tbody.innerHTML = '';
+            
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.email}</td>
+                    <td>${user.display_name || '-'}</td>
+                    <td><span class="role-badge role-${user.role}">${user.role}</span></td>
+                    <td>
+                        <select class="role-select" onchange="updateRole('${user.uid}', this.value)">
+                            <option value="viewer" ${user.role === 'viewer' ? 'selected' : ''}>Viewer</option>
+                            <option value="farmer" ${user.role === 'farmer' ? 'selected' : ''}>Farmer</option>
+                            <option value="processor" ${user.role === 'processor' ? 'selected' : ''}>Processor</option>
+                            <option value="tester" ${user.role === 'tester' ? 'selected' : ''}>Tester</option>
+                            <option value="distributor" ${user.role === 'distributor' ? 'selected' : ''}>Distributor</option>
+                            <option value="retailer" ${user.role === 'retailer' ? 'selected' : ''}>Retailer</option>
+                            <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Admin</option>
+                        </select>
+                    </td>
+                    <td class="actions">
+                        <button onclick="deleteUser('${user.uid}', '${user.email}')" class="btn btn-small btn-danger">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            document.getElementById('usersLoading').classList.add('hidden');
+            document.getElementById('usersTable').classList.remove('hidden');
+        }
+        
+        function updateStats(users) {
+            document.getElementById('totalUsers').textContent = users.length;
+            document.getElementById('adminCount').textContent = users.filter(u => u.role === 'admin').length;
+            document.getElementById('farmerCount').textContent = users.filter(u => u.role === 'farmer').length;
+            document.getElementById('testerCount').textContent = users.filter(u => u.role === 'tester').length;
+        }
+        
+        async function updateRole(uid, newRole) {
+            try {
+                const response = await fetch(`${API_URL}/api/auth/set-role`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ uid, role: newRole })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to update role');
+                }
+                
+                showSuccess(`Role updated to ${newRole}`);
+                loadUsers();
+                
+            } catch (error) {
+                console.error('Error updating role:', error);
+                showError('Failed to update role');
+            }
+        }
+        
+        async function deleteUser(uid, email) {
+            if (!confirm(`Are you sure you want to delete ${email}?`)) {
+                return;
+            }
+            
+            // Note: We need to add a delete endpoint to the API
+            showError('Delete functionality requires backend implementation');
+        }
+        
+        async function createUser(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('newEmail').value;
+            const password = document.getElementById('newPassword').value;
+            const displayName = document.getElementById('newName').value;
+            const role = document.getElementById('newRole').value;
+            
+            try {
+                const response = await fetch(`${API_URL}/api/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password, display_name: displayName, role })
+                });
+                
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.error || 'Failed to create user');
+                }
+                
+                showSuccess(`User ${email} created with role ${role}`);
+                closeCreateModal();
+                loadUsers();
+                
+            } catch (error) {
+                console.error('Error creating user:', error);
+                showError(error.message);
+            }
+        }
+        
+        function openCreateModal() {
+            document.getElementById('createModal').classList.add('active');
+        }
+        
+        function closeCreateModal() {
+            document.getElementById('createModal').classList.remove('active');
+            document.getElementById('newEmail').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('newName').value = '';
+            document.getElementById('newRole').value = 'viewer';
+        }
+        
+        function goBack() {
+            window.location.href = 'login.html';
+        }
+        
+        function showError(message) {
+            const el = document.getElementById('errorMessage');
+            el.textContent = message;
+            el.classList.remove('hidden');
+            setTimeout(() => el.classList.add('hidden'), 5000);
+        }
+        
+        function showSuccess(message) {
+            const el = document.getElementById('successMessage');
+            el.textContent = message;
+            el.classList.remove('hidden');
+            setTimeout(() => el.classList.add('hidden'), 3000);
+        }
+    </script>
+</body>
+</html>

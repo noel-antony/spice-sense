@@ -33,92 +33,124 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: var(--text);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            overflow-x: hidden;
+            overflow: hidden;
         }
         
         body::before {
             content: '';
             position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(233, 69, 96, 0.1) 0%, transparent 70%);
-            animation: pulse 10s ease-in-out infinite;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(118, 75, 162, 0.2) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
         }
         
-        @keyframes pulse {
-            0%, 100% { transform: scale(1) translate(0, 0); }
-            50% { transform: scale(1.1) translate(-10%, -10%); }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
         }
         
         .login-container {
-            background: var(--bg-card);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
             width: 100%;
-            max-width: 420px;
+            max-width: 450px;
             position: relative;
             z-index: 1;
             animation: fadeIn 0.6s ease-out;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #667eea, #764ba2, #ff6b6b);
+            border-radius: 25px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .login-container:hover::before {
+            opacity: 0.5;
         }
         
         .logo {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
         
         .logo h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            font-size: 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b6b 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
             animation: fadeIn 0.8s ease-out 0.2s both;
+            font-weight: 800;
+            letter-spacing: -1px;
         }
         
         .logo p {
-            color: var(--text-dim);
+            color: #667eea;
             margin-top: 5px;
             animation: fadeIn 0.8s ease-out 0.4s both;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
         
         .tabs {
             display: flex;
-            margin-bottom: 25px;
-            border-radius: 10px;
+            margin-bottom: 30px;
+            border-radius: 15px;
             overflow: hidden;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(102, 126, 234, 0.1);
+            padding: 5px;
         }
         
         .tab {
             flex: 1;
-            padding: 12px;
+            padding: 15px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             background: transparent;
-            color: var(--text-dim);
-            font-size: 1rem;
+            color: #667eea;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 12px;
         }
         
         .tab.active {
-            background: var(--accent);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transform: scale(1.02);
         }
         
         .tab:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
         }
         
         .form-group {
@@ -127,26 +159,29 @@
         
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            color: var(--text-dim);
-            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: #667eea;
+            font-size: 0.95rem;
+            font-weight: 600;
         }
         
         .form-group input, .form-group select {
             width: 100%;
-            padding: 15px;
-            border: 2px solid transparent;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text);
+            padding: 16px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
             font-size: 1rem;
             transition: all 0.3s;
         }
         
         .form-group input:focus, .form-group select:focus {
             outline: none;
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.1);
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
         }
         
         .form-group select option {
@@ -166,13 +201,18 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            padding: 18px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
         
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
         }
         
         .btn-primary:active {
@@ -294,9 +334,9 @@
             <h1>🌶️ Spice Sense</h1>
             <p>Supply Chain Traceability</p>
             <div style="margin-top: 15px; display: flex; justify-content: center; gap: 10px;">
-                <a href="index.html" style="color: var(--text-dim); font-size: 0.85rem; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-dim)'">📊 Dashboard</a>
-                <span style="color: var(--text-dim)">|</span>
-                <a href="track.html" style="color: var(--text-dim); font-size: 0.85rem; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-dim)'">🔍 Track Batch</a>
+                <a href="index.html" style="color: #667eea; font-size: 0.85rem; text-decoration: none; transition: color 0.3s; font-weight: 600;" onmouseover="this.style.color='#764ba2'" onmouseout="this.style.color='#667eea'">📊 Dashboard</a>
+                <span style="color: #999">|</span>
+                <a href="track.html" style="color: #667eea; font-size: 0.85rem; text-decoration: none; transition: color 0.3s; font-weight: 600;" onmouseover="this.style.color='#764ba2'" onmouseout="this.style.color='#667eea'">🔍 Track Batch</a>
             </div>
         </div>
         

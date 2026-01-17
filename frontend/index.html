@@ -25,7 +25,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             color: var(--text);
             min-height: 100vh;
             padding: 20px;
@@ -48,11 +48,13 @@
         }
         
         .header h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
+            font-weight: 800;
+            letter-spacing: -1px;
         }
         
         .nav-links {
@@ -108,17 +110,35 @@
         }
         
         .card {
-            background: var(--bg-card);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             animation: fadeIn 0.6s ease-out;
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            backdrop-filter: blur(20px);
         }
         
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .label {
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .value {
+            color: #333;
+            font-weight: 700;
         }
         
         .card h2 {

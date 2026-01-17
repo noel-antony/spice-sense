@@ -21,12 +21,33 @@
             box-sizing: border-box;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-dark);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             color: var(--text);
             min-height: 100vh;
             padding: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         .header {
@@ -36,13 +57,18 @@
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            animation: slideIn 0.6s ease-out;
         }
         
         .header h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             background: linear-gradient(135deg, #e94560, #ff6b6b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+        
+        .header h1::before {
+            content: '👑 ';
         }
         
         .header-actions {
@@ -73,6 +99,23 @@
         
         .btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-loading::after {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-left: 8px;
         }
         
         .card {
@@ -80,6 +123,9 @@
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 20px;
+            animation: fadeIn 0.6s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
         }
         
         .card h2 {
@@ -287,14 +333,24 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>👑 Admin Panel</h1>
-        <div class="header-actions">
-            <button onclick="openCreateModal()" class="btn btn-primary">+ Create User</button>
-            <button onclick="loadUsers()" class="btn btn-secondary">↻ Refresh</button>
-            <button onclick="goBack()" class="btn btn-secondary">← Back</button>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>Admin Panel</h1>
+                <div style="margin-top: 10px; display: flex; gap: 10px;">
+                    <a href="index.html" style="color: var(--text-dim); font-size: 0.85rem; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--success)'" onmouseout="this.style.color='var(--text-dim)'">📊 Dashboard</a>
+                    <span style="color: var(--text-dim)">|</span>
+                    <a href="track.html" style="color: var(--text-dim); font-size: 0.85rem; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--success)'" onmouseout="this.style.color='var(--text-dim)'">🔍 Track Batch</a>
+                    <span style="color: var(--text-dim)">|</span>
+                    <a href="login.html" style="color: var(--text-dim); font-size: 0.85rem; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--success)'" onmouseout="this.style.color='var(--text-dim)'">🔐 Login</a>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button onclick="openCreateModal()" class="btn btn-primary">+ Create User</button>
+                <button onclick="loadUsers()" class="btn btn-secondary">↻ Refresh</button>
+                <button onclick="goBack()" class="btn btn-secondary">← Back</button>
+            </div>
         </div>
-    </div>
     
     <div id="errorMessage" class="error-message hidden"></div>
     <div id="successMessage" class="success-message hidden"></div>
@@ -575,5 +631,6 @@
             setTimeout(() => el.classList.add('hidden'), 3000);
         }
     </script>
+    </div> <!-- Close container -->
 </body>
 </html>

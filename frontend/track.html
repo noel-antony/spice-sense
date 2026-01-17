@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spice Sense - Batch Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .search-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-container button {
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-container button:hover {
+            background: #5568d3;
+        }
+
+        .demo-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        .batch-details {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .batch-details.active {
+            display: block;
+        }
+
+        .batch-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .batch-header-left h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .batch-info {
+            display: grid;
+            gap: 10px;
+            font-size: 0.95em;
+        }
+
+        .batch-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .batch-info-label {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .batch-info-value {
+            color: #555;
+        }
+
+        .qr-code-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-code-container img {
+            width: 180px;
+            height: 180px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            background: white;
+        }
+
+        .qr-code-label {
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .integrity-badge {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.95em;
+            margin-top: 10px;
+        }
+
+        .integrity-badge.verified {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .integrity-badge.compromised {
+            background: #f8d7da;
+            color: #721c24;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .timeline-item:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: 25px;
+            top: 60px;
+            width: 2px;
+            height: 30px;
+            background: #ddd;
+        }
+
+        .timeline-dot {
+            width: 50px;
+            height: 50px;
+            background: #667eea;
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            flex-shrink: 0;
+            margin-right: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-dot.completed {
+            background: #28a745;
+        }
+
+        .timeline-dot.pending {
+            background: #ffc107;
+        }
+
+        .timeline-dot.compromised {
+            background: #dc3545;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        .timeline-content.compromised {
+            background: #fff5f5;
+            border-left-color: #dc3545;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 1em;
+        }
+
+        .timeline-time {
+            font-size: 0.85em;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .timeline-details {
+            font-size: 0.9em;
+            color: #555;
+            margin: 8px 0;
+        }
+
+        .timeline-hash {
+            font-family: 'Courier New', monospace;
+            font-size: 0.75em;
+            color: #666;
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+            word-break: break-all;
+            border: 1px solid #ddd;
+        }
+
+        .hash-verification {
+            background: #f0f0f0;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-top: 8px;
+            font-family: monospace;
+        }
+
+        .hash-verification.valid {
+            color: #155724;
+        }
+
+        .hash-verification.invalid {
+            color: #721c24;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .demo-controls {
+            background: #e7f3ff;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .demo-controls h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .demo-controls p {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .demo-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+
+        .demo-button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .demo-button.reset {
+            border-color: #28a745;
+            color: #28a745;
+        }
+
+        .demo-button.reset:hover {
+            background: #28a745;
+            color: white;
+        }
+
+        .no-batches {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .no-batches-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .nav-button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s;
+        }
+
+        .nav-button:hover {
+            background: #5568d3;
+        }
+
+        .nav-button.secondary {
+            background: transparent;
+            border: 2px solid white;
+        }
+
+        .nav-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌶️ Spice Sense</h1>
+            <p>Supply Chain Batch Tracker</p>
+        </header>
+
+        <div class="search-card">
+            <h2 style="margin-bottom: 15px; color: #333;">Search Batch</h2>
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="batchSearchInput" 
+                    placeholder="Enter Batch ID (e.g., BATCH-2025-001) or paste Batch ID from QR code"
+                >
+                <button onclick="searchBatch()">Search</button>
+            </div>
+            <div class="demo-note">
+                💡 <strong>Demo Mode:</strong> After searching, use the "DEMO" section below to simulate tampering and see how the hash chain detects it!
+            </div>
+        </div>
+
+        <div id="batchDetails" class="batch-details">
+            <div class="batch-header">
+                <div class="batch-header-left">
+                    <h2 id="batchTitle">Batch Details</h2>
+                    <div class="batch-info">
+                        <div class="batch-info-row">
+                            <span class="batch-info-label">Batch ID:</span>
+                            <span class="batch-info-value" id="batchId">-</span>
+                        </div>
+                        <div class="batch-info-row">
+                            <span class="batch-info-label">Origin Farm:</span>
+                            <span class="batch-info-value" id="originFarm">-</span>
+                        </div>
+                        <div class="batch-info-row">
+                            <span class="batch-info-label">Location:</span>
+                            <span class="batch-info-value" id="originLocation">-</span>
+                        </div>
+                        <div class="batch-info-row">
+                            <span class="batch-info-label">Quantity:</span>
+                            <span class="batch-info-value" id="quantity">-</span>
+                        </div>
+                        <div class="batch-info-row">
+                            <span class="batch-info-label">Spice Type:</span>
+                            <span class="batch-info-value" id="spiceType">-</span>
+                        </div>
+                        <div class="batch-info-row">
+                            <span class="batch-info-label">Harvest Date:</span>
+                            <span class="batch-info-value" id="harvestDate">-</span>
+                        </div>
+                        <div class="batch-info-row">
+                            <span class="batch-info-label">Initial Purity:</span>
+                            <span class="batch-info-value" id="initialPurity">-</span>
+                        </div>
+                        <div id="integrityStatus"></div>
+                    </div>
+                </div>
+                <div class="qr-code-container">
+                    <img id="qrCode" src="" alt="QR Code">
+                    <div class="qr-code-label">Scan to track this batch</div>
+                </div>
+            </div>
+
+            <h3 style="color: #333; margin-bottom: 20px;">📍 Supply Chain Journey</h3>
+            <div class="timeline" id="timeline"></div>
+
+            <!-- DEMO CONTROLS -->
+            <div class="demo-controls">
+                <h3>🎬 DEMO: Simulate Tampering Detection</h3>
+                <p>Click any button below to simulate tampering with a specific event. Watch how the hash chain immediately detects the modification!</p>
+                <div class="demo-buttons">
+                    <button class="demo-button" onclick="tamperWithEvent(0)">Tamper Event 1</button>
+                    <button class="demo-button" onclick="tamperWithEvent(1)">Tamper Event 2</button>
+                    <button class="demo-button" onclick="tamperWithEvent(2)">Tamper Event 3</button>
+                    <button class="demo-button reset" onclick="resetBatch()">Reset to Original</button>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #667eea;">
+                    <strong>What happens:</strong> Modifying any event breaks the hash chain. All subsequent hashes become invalid, showing that the data was tampered with!
+                </p>
+            </div>
+
+            <div class="nav-buttons" style="margin-top: 30px;">
+                <button class="nav-button secondary" onclick="document.getElementById('batchDetails').classList.remove('active'); document.getElementById('batchSearchInput').value = '';">← Back to Search</button>
+                <a href="login.html" class="nav-button">Sign In</a>
+            </div>
+        </div>
+
+        <div id="noBatches" class="no-batches" style="display: none; background: white; border-radius: 12px; margin-top: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);">
+            <div class="no-batches-icon">📦</div>
+            <h2 style="color: #333; margin-bottom: 10px;">No Batch Found</h2>
+            <p style="color: #999;">Enter a valid Batch ID to search</p>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://spice-purity-server.onrender.com';
+        let currentBatch = null;
+        let originalEvents = null;
+
+        async function searchBatch() {
+            const batchId = document.getElementById('batchSearchInput').value.trim();
+            if (!batchId) {
+                alert('Please enter a Batch ID');
+                return;
+            }
+
+            showLoading(true);
+            try {
+                const response = await fetch(`${API_URL}/api/batches/${batchId}`);
+                if (!response.ok) throw new Error('Batch not found');
+                
+                const batchData = await response.json();
+                if (!batchData.success) throw new Error('Failed to load batch');
+                
+                currentBatch = batchData.batch;
+
+                // Get journey
+                const journeyResponse = await fetch(`${API_URL}/api/batches/${batchId}/journey`);
+                const journeyData = await journeyResponse.json();
+
+                // Get verification status
+                const verifyResponse = await fetch(`${API_URL}/api/batches/${batchId}/verify`);
+                const verifyData = await verifyResponse.json();
+
+                displayBatchDetails(batchData.batch, journeyData, verifyData);
+            } catch (error) {
+                alert('Error: ' + error.message);
+                document.getElementById('noBatches').style.display = 'block';
+                document.getElementById('batchDetails').classList.remove('active');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function displayBatchDetails(batch, journey, verification) {
+            originalEvents = JSON.parse(JSON.stringify(journey.events || []));
+
+            document.getElementById('batchId').textContent = batch.id;
+            document.getElementById('originFarm').textContent = batch.origin_farm || '-';
+            document.getElementById('originLocation').textContent = batch.origin_location || '-';
+            document.getElementById('quantity').textContent = batch.quantity_kg + ' kg';
+            document.getElementById('spiceType').textContent = batch.spice_type || '-';
+            document.getElementById('harvestDate').textContent = new Date(batch.harvest_date).toLocaleDateString();
+            document.getElementById('initialPurity').textContent = batch.initial_purity || '-';
+
+            // Display QR code
+            if (batch.qr_code_base64) {
+                document.getElementById('qrCode').src = 'data:image/png;base64,' + batch.qr_code_base64;
+            }
+
+            // Display integrity status
+            const integrityElement = document.getElementById('integrityStatus');
+            const isValid = verification.chain_valid;
+            integrityElement.innerHTML = `
+                <div class="integrity-badge ${isValid ? 'verified' : 'compromised'}">
+                    ${isValid ? '✓ Chain Verified' : '⚠️ Chain Compromised'}
+                </div>
+            `;
+
+            // Display timeline
+            displayTimeline(journey.events || [], verification);
+
+            document.getElementById('noBatches').style.display = 'none';
+            document.getElementById('batchDetails').classList.add('active');
+        }
+
+        function displayTimeline(events, verification) {
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = '';
+
+            events.forEach((event, index) => {
+                const eventDate = new Date(event.timestamp);
+                const isValid = verification.chain_valid || event.hash === event.calculated_hash;
+                
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                
+                const dotClass = isValid ? 'completed' : 'compromised';
+                const contentClass = isValid ? '' : 'compromised';
+
+                timelineItem.innerHTML = `
+                    <div class="timeline-dot ${dotClass}">
+                        ${isValid ? '✓' : '✗'}
+                    </div>
+                    <div class="timeline-content ${contentClass}">
+                        <div class="timeline-title">${event.event_type} - ${event.stage}</div>
+                        <div class="timeline-time">${eventDate.toLocaleString()}</div>
+                        <div class="timeline-details">
+                            ${event.location ? `<div>📍 <strong>Location:</strong> ${event.location}</div>` : ''}
+                            ${event.handler_name ? `<div>👤 <strong>Handler:</strong> ${event.handler_name} (${event.handler_type})</div>` : ''}
+                            ${event.purity_score ? `<div>🔬 <strong>Purity:</strong> ${event.purity_score}% (${event.purity_grade})</div>` : ''}
+                            ${event.temperature_c ? `<div>🌡️ <strong>Temperature:</strong> ${event.temperature_c}°C</div>` : ''}
+                            ${event.details ? `<div>📝 <strong>Details:</strong> ${event.details}</div>` : ''}
+                        </div>
+                        <div class="timeline-hash">
+                            <strong>Hash:</strong><br>
+                            ${event.hash}
+                        </div>
+                        ${!isValid ? `
+                            <div class="hash-verification invalid">
+                                ⚠️ <strong>HASH MISMATCH DETECTED!</strong><br>
+                                Expected: ${event.calculated_hash}<br>
+                                Actual: ${event.hash}<br>
+                                <strong>This event has been tampered with!</strong>
+                            </div>
+                        ` : `
+                            <div class="hash-verification valid">
+                                ✓ Hash verified
+                            </div>
+                        `}
+                    </div>
+                `;
+
+                timeline.appendChild(timelineItem);
+            });
+        }
+
+        function tamperWithEvent(eventIndex) {
+            if (!originalEvents || !currentBatch) return;
+
+            const events = JSON.parse(JSON.stringify(originalEvents));
+            
+            if (eventIndex >= events.length) {
+                alert(`This batch only has ${events.length} event(s)`);
+                return;
+            }
+
+            // Simulate tampering by changing event details
+            const event = events[eventIndex];
+            event.details = event.details ? event.details + " [TAMPERED]" : "TAMPERED EVENT";
+            event.purity_score = event.purity_score ? event.purity_score - 5 : 50;
+
+            // Invalidate hash
+            event.hash = "INVALID_HASH_" + Math.random().toString(36).substr(2, 9);
+
+            // Invalidate all subsequent hashes
+            for (let i = eventIndex + 1; i < events.length; i++) {
+                events[i].hash = "INVALID_HASH_" + Math.random().toString(36).substr(2, 9);
+            }
+
+            // Display with tampering detected
+            const verification = {
+                chain_valid: false,
+                batch_id: currentBatch.id,
+                integrity: 'COMPROMISED ✗'
+            };
+
+            displayTimeline(events, verification);
+
+            // Show alert
+            setTimeout(() => {
+                alert('⚠️ TAMPERING DETECTED!\n\nThe event has been modified, breaking the hash chain.\n\nAll subsequent events also show invalid hashes, proving the entire chain has been compromised.\n\nThis is how the system catches unauthorized modifications!');
+            }, 500);
+        }
+
+        function resetBatch() {
+            if (!currentBatch || !originalEvents) return;
+            
+            const verification = {
+                chain_valid: true,
+                batch_id: currentBatch.id,
+                integrity: 'VERIFIED ✓'
+            };
+
+            displayTimeline(originalEvents, verification);
+            alert('✓ Chain reset to original state. All hashes are now valid again.');
+        }
+
+        function showLoading(show) {
+            if (show) {
+                document.getElementById('batchDetails').innerHTML = '<div class="loading">Loading batch information...</div>';
+                document.getElementById('batchDetails').classList.add('active');
+            }
+        }
+
+        // Allow Enter key to search
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('batchSearchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') searchBatch();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -21,14 +21,40 @@
             box-sizing: border-box;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-dark);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             color: var(--text);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(233, 69, 96, 0.1) 0%, transparent 70%);
+            animation: pulse 10s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.1) translate(-10%, -10%); }
         }
         
         .login-container {
@@ -38,6 +64,11 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             width: 100%;
             max-width: 420px;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.6s ease-out;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         
         .logo {
@@ -51,11 +82,14 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            margin-bottom: 5px;
+            animation: fadeIn 0.8s ease-out 0.2s both;
         }
         
         .logo p {
             color: var(--text-dim);
             margin-top: 5px;
+            animation: fadeIn 0.8s ease-out 0.4s both;
         }
         
         .tabs {
@@ -139,6 +173,29 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-loading::after {
+            content: '';
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
         }
         
         .btn-secondary {
@@ -236,6 +293,11 @@
         <div class="logo">
             <h1>🌶️ Spice Sense</h1>
             <p>Supply Chain Traceability</p>
+            <div style="margin-top: 15px; display: flex; justify-content: center; gap: 10px;">
+                <a href="index.html" style="color: var(--text-dim); font-size: 0.85rem; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-dim)'">📊 Dashboard</a>
+                <span style="color: var(--text-dim)">|</span>
+                <a href="track.html" style="color: var(--text-dim); font-size: 0.85rem; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-dim)'">🔍 Track Batch</a>
+            </div>
         </div>
         
         <div id="errorMessage" class="error-message"></div>

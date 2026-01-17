@@ -25,15 +25,26 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-dark);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             color: var(--text);
             min-height: 100vh;
             padding: 20px;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
         .header {
             text-align: center;
             margin-bottom: 30px;
+            animation: fadeIn 0.8s ease-out;
         }
         
         .header h1 {
@@ -42,6 +53,30 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .nav-link {
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: rgba(233, 69, 96, 0.2);
+            border-color: var(--accent);
+            transform: translateY(-2px);
         }
         
         .status-badge {
@@ -77,6 +112,13 @@
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeIn 0.6s ease-out;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
         }
         
         .card h2 {
@@ -220,7 +262,12 @@
 <body>
     <div class="header">
         <h1>🌶️ Spice Purity Dashboard</h1>
-        <div style="margin-top: 10px;">
+        <div class="nav-links">
+            <a href="login.html" class="nav-link">🔐 Sign In</a>
+            <a href="admin.html" class="nav-link">👑 Admin</a>
+            <a href="track.html" class="nav-link">🔍 Track Batch</a>
+        </div>
+        <div style="margin-top: 15px;">
             <span id="connectionStatus" class="status-badge disconnected">Disconnected</span>
             <span id="esp32Status" class="status-badge" style="margin-left: 10px; background: #333;">ESP32: Waiting</span>
         </div>

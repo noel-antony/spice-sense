@@ -192,11 +192,13 @@ def handle_history_request():
 # ============================================================
 
 if __name__ == '__main__':
+    import os
+    port = int(os.environ.get('PORT', 5000))
     print("\n" + "="*50)
     print("🌶️  SPICE PURITY SERVER")
     print("="*50)
-    print(f"Dashboard: http://localhost:5000")
-    print(f"API Endpoint: http://localhost:5000/api/predict")
+    print(f"Dashboard: http://localhost:{port}")
+    print(f"API Endpoint: http://localhost:{port}/api/predict")
     print("="*50 + "\n")
     
-    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+    socketio.run(app, host='0.0.0.0', port=port, debug=False)

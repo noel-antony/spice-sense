@@ -1,0 +1,73 @@
+{
+  "model_type": "raw_sensor_features",
+  "features": [
+    "mq135_aqi",
+    "mq3_voltage",
+    "gas_resistance_kOhm"
+  ],
+  "scaling": {
+    "mean": [
+      61.702705035864355,
+      1.281932539682544,
+      34.823801587301546
+    ],
+    "std": [
+      13.743999763921957,
+      0.03629046472639815,
+      3.795537677618246
+    ]
+  },
+  "classification_thresholds": {
+    "gas_based": {
+      "best_good": 29.854827692687746,
+      "good_poor": 34.109589636405026,
+      "poor_worst": 37.23214744472943,
+      "high_low": 33.86264840182649
+    },
+    "note": "Lower gas_resistance = Lower purity"
+  },
+  "purity_lookup": {
+    "gas_points": [
+      26.8990625,
+      32.81059288537549,
+      35.40858638743456,
+      39.055708502024295
+    ],
+    "purity_points": [
+      100,
+      75,
+      50,
+      25
+    ]
+  },
+  "regression": {
+    "simple": {
+      "intercept": 257.16283128119505,
+      "coef": -5.796548342999957
+    },
+    "multi": {
+      "intercept": 231.21038827249288,
+      "coef": [
+        -0.08473796659006132,
+        31.448142748600006,
+        -6.051047294539437
+      ]
+    }
+  },
+  "class_labels": {
+    "binary": [
+      "high_purity",
+      "low_purity"
+    ],
+    "multi": [
+      "best",
+      "good",
+      "poor",
+      "worst"
+    ]
+  },
+  "aqi_calculation": {
+    "formula": "AQI = 100.0 / mq135_ratio",
+    "note": "Higher AQI = Higher purity (cleaner air from pure spice)"
+  }
+}

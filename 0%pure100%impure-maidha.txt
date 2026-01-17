@@ -1,0 +1,379 @@
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.55 °C
+   Humidity:         71.56 %
+   Gas Resistance:   43.39 kΩ
+   MQ135 Ratio:      31.2012
+   MQ3 Voltage:      1.500 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.2973  (mean: 23.62)
+   Sensor Combined:  345.5604  (mean: 49.24)
+   MQ3 Voltage:      1.5000  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: LOW_PURITY
+   Confidence: HIGH (far from decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: WORST
+   Meaning: 🔴 Heavy contamination (~25% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 25.0%
+   Contamination:    75.0% maida
+
+⚠️  WARNING: Sensor reading outside training range!
+   Consider recalibrating or check sample placement.
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.55 °C
+   Humidity:         71.56 %
+   Gas Resistance:   43.61 kΩ
+   MQ135 Ratio:      31.5597
+   MQ3 Voltage:      1.500 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.2973  (mean: 23.62)
+   Sensor Combined:  349.2610  (mean: 49.24)
+   MQ3 Voltage:      1.4997  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: LOW_PURITY
+   Confidence: HIGH (far from decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: WORST
+   Meaning: 🔴 Heavy contamination (~25% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 25.0%
+   Contamination:    75.0% maida
+
+⚠️  WARNING: Sensor reading outside training range!
+   Consider recalibrating or check sample placement.
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.55 °C
+   Humidity:         71.58 %
+   Gas Resistance:   43.61 kΩ
+   MQ135 Ratio:      30.8754
+   MQ3 Voltage:      1.501 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.3019  (mean: 23.62)
+   Sensor Combined:  342.3970  (mean: 49.24)
+   MQ3 Voltage:      1.5011  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: LOW_PURITY
+   Confidence: HIGH (far from decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: WORST
+   Meaning: 🔴 Heavy contamination (~25% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 25.0%
+   Contamination:    75.0% maida
+
+⚠️  WARNING: Sensor reading outside training range!
+   Consider recalibrating or check sample placement.
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.56 °C
+   Humidity:         71.59 %
+   Gas Resistance:   43.57 kΩ
+   MQ135 Ratio:      31.0350
+   MQ3 Voltage:      1.502 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.3070  (mean: 23.62)
+   Sensor Combined:  343.9618  (mean: 49.24)
+   MQ3 Voltage:      1.5018  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: LOW_PURITY
+   Confidence: HIGH (far from decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: WORST
+   Meaning: 🔴 Heavy contamination (~25% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 25.0%
+   Contamination:    75.0% maida
+
+⚠️  WARNING: Sensor reading outside training range!
+   Consider recalibrating or check sample placement.
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.56 °C
+   Humidity:         71.61 %
+   Gas Resistance:   43.43 kΩ
+   MQ135 Ratio:      31.1103
+   MQ3 Voltage:      1.503 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.3124  (mean: 23.62)
+   Sensor Combined:  344.6324  (mean: 49.24)
+   MQ3 Voltage:      1.5029  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: LOW_PURITY
+   Confidence: HIGH (far from decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: WORST
+   Meaning: 🔴 Heavy contamination (~25% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 25.0%
+   Contamination:    75.0% maida
+
+⚠️  WARNING: Sensor reading outside training range!
+   Consider recalibrating or check sample placement.
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.56 °C
+   Humidity:         71.59 %
+   Gas Resistance:   43.66 kΩ
+   MQ135 Ratio:      31.2367
+   MQ3 Voltage:      1.503 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.3087  (mean: 23.62)
+   Sensor Combined:  346.0094  (mean: 49.24)
+   MQ3 Voltage:      1.5028  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: LOW_PURITY
+   Confidence: HIGH (far from decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: WORST
+   Meaning: 🔴 Heavy contamination (~25% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 25.0%
+   Contamination:    75.0% maida
+
+⚠️  WARNING: Sensor reading outside training range!
+   Consider recalibrating or check sample placement.
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.56 °C
+   Humidity:         71.60 %
+   Gas Resistance:   43.39 kΩ
+   MQ135 Ratio:      31.4256
+   MQ3 Voltage:      1.502 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.3103  (mean: 23.62)
+   Sensor Combined:  347.7709  (mean: 49.24)
+   MQ3 Voltage:      1.5024  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: LOW_PURITY
+   Confidence: HIGH (far from decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: WORST
+   Meaning: 🔴 Heavy contamination (~25% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 25.0%
+   Contamination:    75.0% maida
+
+⚠️  WARNING: Sensor reading outside training range!
+   Consider recalibrating or check sample placement.
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.56 °C
+   Humidity:         71.60 %
+   Gas Resistance:   43.61 kΩ
+   MQ135 Ratio:      31.4564
+   MQ3 Voltage:      1.502 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.3105  (mean: 23.62)
+   Sensor Combined:  348.2005  (mean: 49.24)
+   MQ3 Voltage:      1.5016  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: LOW_PURITY
+   Confidence: HIGH (far from decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: WORST
+   Meaning: 🔴 Heavy contamination (~25% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 25.0%
+   Contamination:    75.0% maida
+
+⚠️  WARNING: Sensor reading outside training range!
+   Consider recalibrating or check sample placement.
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.56 °C
+   Humidity:         71.61 %
+   Gas Resistance:   43.57 kΩ
+   MQ135 Ratio:      31.4256
+   MQ3 Voltage:      1.501 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.3159  (mean: 23.62)
+   Sensor Combined:  347.8755  (mean: 49.24)
+   MQ3 Voltage:      1.5013  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: LOW_PURITY
+   Confidence: HIGH (far from decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: WORST
+   Meaning: 🔴 Heavy contamination (~25% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 25.0%
+   Contamination:    75.0% maida
+
+⚠️  WARNING: Sensor reading outside training range!
+   Consider recalibrating or check sample placement.
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.56 °C
+   Humidity:         71.59 %
+   Gas Resistance:   43.79 kΩ
+   MQ135 Ratio:      31.4359
+   MQ3 Voltage:      1.499 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.3094  (mean: 23.62)
+   Sensor Combined:  348.1249  (mean: 49.24)
+   MQ3 Voltage:      1.4988  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: LOW_PURITY
+   Confidence: HIGH (far from decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: WORST
+   Meaning: 🔴 Heavy contamination (~25% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 25.0%
+   Contamination:    75.0% maida
+
+⚠️  WARNING: Sensor reading outside training range!
+   Consider recalibrating or check sample placement.
+
+======================================================================
+

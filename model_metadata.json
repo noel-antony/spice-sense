@@ -1,0 +1,35 @@
+{
+  "feature_names": [
+    "env_stability",
+    "sensor_combined",
+    "mq3_voltage"
+  ],
+  "binary_classes": [
+    "high_purity",
+    "low_purity"
+  ],
+  "multi_classes": [
+    "best",
+    "good",
+    "poor",
+    "worst"
+  ],
+  "model_performance": {
+    "binary_accuracy": 1.0,
+    "multi_accuracy": 1.0,
+    "regression_rmse": 2.2095499040399864,
+    "regression_mae": 0.3323353293413174,
+    "regression_r2": 0.9931188673136603
+  },
+  "feature_descriptions": {
+    "env_stability": "Temperature * Humidity interaction (correlation: 0.9721)",
+    "sensor_combined": "Weighted multi-sensor fusion (correlation: 0.9500)",
+    "mq3_voltage": "MQ3 VOC sensor voltage (correlation: 0.6669)"
+  },
+  "purity_scale": {
+    "100%": "Best - Pure turmeric (0% contamination)",
+    "75%": "Good - 25% flour contamination",
+    "50%": "Poor - 50% flour contamination",
+    "25%": "Worst - 75% flour contamination"
+  }
+}

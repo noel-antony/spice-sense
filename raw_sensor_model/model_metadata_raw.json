@@ -1,0 +1,41 @@
+{
+  "feature_names": [
+    "mq135_aqi",
+    "mq3_voltage",
+    "gas_resistance_kOhm"
+  ],
+  "feature_descriptions": {
+    "mq135_aqi": "Air Quality Index calculated from MQ135 ratio (100/ratio)",
+    "mq3_voltage": "Direct MQ3 sensor voltage (0-3.3V)",
+    "gas_resistance_kOhm": "BME688 gas resistance in kOhm"
+  },
+  "scaling": {
+    "mean": [
+      61.702705035864355,
+      1.281932539682544,
+      34.823801587301546
+    ],
+    "std": [
+      13.743999763921957,
+      0.03629046472639815,
+      3.795537677618246
+    ]
+  },
+  "binary_classes": [
+    "high_purity",
+    "low_purity"
+  ],
+  "multi_classes": [
+    "best",
+    "good",
+    "poor",
+    "worst"
+  ],
+  "model_performance": {
+    "binary_accuracy": 1.0,
+    "multi_accuracy": 1.0,
+    "regression_rmse": 0.0,
+    "regression_r2": 1.0
+  },
+  "model_type": "raw_sensor_features"
+}

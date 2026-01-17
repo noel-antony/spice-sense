@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌶️ Spice Purity Dashboard</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #1a1a2e;
+            --bg-card: #16213e;
+            --accent: #e94560;
+            --success: #00d9ff;
+            --warning: #ffc107;
+            --text: #eee;
+            --text-dim: #888;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            background: #333;
+        }
+        
+        .status-badge.connected {
+            background: rgba(0, 217, 255, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+        
+        .status-badge.disconnected {
+            background: rgba(233, 69, 96, 0.2);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card h2 {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .purity-display {
+            text-align: center;
+            grid-column: span 2;
+        }
+        
+        .purity-value {
+            font-size: 6rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--success), #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .purity-value.warning {
+            background: linear-gradient(135deg, var(--warning), #ff9800);
+            -webkit-background-clip: text;
+        }
+        
+        .purity-value.danger {
+            background: linear-gradient(135deg, var(--accent), #ff4444);
+            -webkit-background-clip: text;
+        }
+        
+        .quality-badge {
+            display: inline-block;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .quality-BEST { background: rgba(0, 255, 136, 0.2); color: #00ff88; border: 2px solid #00ff88; }
+        .quality-GOOD { background: rgba(0, 217, 255, 0.2); color: var(--success); border: 2px solid var(--success); }
+        .quality-POOR { background: rgba(255, 193, 7, 0.2); color: var(--warning); border: 2px solid var(--warning); }
+        .quality-WORST { background: rgba(233, 69, 96, 0.2); color: var(--accent); border: 2px solid var(--accent); }
+        
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .sensor-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .sensor-item .label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 5px;
+        }
+        
+        .sensor-item .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+        
+        .probability-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .prob-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .prob-bar .label {
+            width: 60px;
+            font-size: 0.9rem;
+        }
+        
+        .prob-bar .bar-container {
+            flex: 1;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .prob-bar .bar {
+            height: 100%;
+            border-radius: 12px;
+            transition: width 0.5s ease;
+        }
+        
+        .prob-bar .bar.best { background: linear-gradient(90deg, #00ff88, #00cc6a); }
+        .prob-bar .bar.good { background: linear-gradient(90deg, #00d9ff, #00a8cc); }
+        .prob-bar .bar.poor { background: linear-gradient(90deg, #ffc107, #cc9a00); }
+        .prob-bar .bar.worst { background: linear-gradient(90deg, #e94560, #cc3a52); }
+        
+        .prob-bar .percent {
+            width: 50px;
+            text-align: right;
+            font-weight: bold;
+        }
+        
+        .chart-container {
+            height: 200px;
+            grid-column: span 2;
+        }
+        
+        .timestamp {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        
+        .readings-count {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .purity-display { grid-column: span 1; }
+            .chart-container { grid-column: span 1; }
+            .purity-value { font-size: 4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌶️ Spice Purity Dashboard</h1>
+        <div style="margin-top: 10px;">
+            <span id="connectionStatus" class="status-badge disconnected">Disconnected</span>
+            <span id="esp32Status" class="status-badge" style="margin-left: 10px; background: #333;">ESP32: Waiting</span>
+        </div>
+    </div>
+    
+    <div class="dashboard">
+        <!-- Main Purity Display -->
+        <div class="card purity-display">
+            <h2>Purity Level</h2>
+            <div id="purityValue" class="purity-value">--</div>
+            <div>
+                <span id="qualityBadge" class="quality-badge quality-GOOD">WAITING</span>
+            </div>
+            <div id="binaryResult" class="timestamp">Binary: --</div>
+            <div id="lastTimestamp" class="timestamp">Waiting for data...</div>
+        </div>
+        
+        <!-- Raw Sensor Values -->
+        <div class="card">
+            <h2>📊 Sensor Readings</h2>
+            <div class="sensor-grid">
+                <div class="sensor-item">
+                    <div class="label">MQ135 AQI</div>
+                    <div class="value" id="mq135Aqi">--</div>
+                </div>
+                <div class="sensor-item">
+                    <div class="label">MQ135 Ratio</div>
+                    <div class="value" id="mq135Ratio">--</div>
+                </div>
+                <div class="sensor-item">
+                    <div class="label">MQ3 Voltage</div>
+                    <div class="value" id="mq3Voltage">--</div>
+                </div>
+                <div class="sensor-item">
+                    <div class="label">Gas Resistance</div>
+                    <div class="value" id="gasResistance">--</div>
+                </div>
+            </div>
+            <div class="readings-count">
+                Total Readings: <strong id="readingsCount">0</strong>
+            </div>
+        </div>
+        
+        <!-- Classification Probabilities -->
+        <div class="card">
+            <h2>🎯 Quality Probabilities</h2>
+            <div class="probability-bars">
+                <div class="prob-bar">
+                    <span class="label">BEST</span>
+                    <div class="bar-container">
+                        <div class="bar best" id="probBest" style="width: 0%"></div>
+                    </div>
+                    <span class="percent" id="probBestText">0%</span>
+                </div>
+                <div class="prob-bar">
+                    <span class="label">GOOD</span>
+                    <div class="bar-container">
+                        <div class="bar good" id="probGood" style="width: 0%"></div>
+                    </div>
+                    <span class="percent" id="probGoodText">0%</span>
+                </div>
+                <div class="prob-bar">
+                    <span class="label">POOR</span>
+                    <div class="bar-container">
+                        <div class="bar poor" id="probPoor" style="width: 0%"></div>
+                    </div>
+                    <span class="percent" id="probPoorText">0%</span>
+                </div>
+                <div class="prob-bar">
+                    <span class="label">WORST</span>
+                    <div class="bar-container">
+                        <div class="bar worst" id="probWorst" style="width: 0%"></div>
+                    </div>
+                    <span class="percent" id="probWorstText">0%</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Purity History Chart -->
+        <div class="card chart-container">
+            <h2>📈 Purity History</h2>
+            <canvas id="purityChart"></canvas>
+        </div>
+    </div>
+    
+    <script>
+        // Initialize Socket.IO connection
+        const socket = io();
+        let readingsCount = 0;
+        
+        // Chart setup
+        const ctx = document.getElementById('purityChart').getContext('2d');
+        const purityHistory = [];
+        const timeLabels = [];
+        const maxPoints = 30;
+        
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timeLabels,
+                datasets: [{
+                    label: 'Purity %',
+                    data: purityHistory,
+                    borderColor: '#00d9ff',
+                    backgroundColor: 'rgba(0, 217, 255, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointBackgroundColor: '#00d9ff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 100,
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#888' }
+                    },
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.1)' },
+                        ticks: { color: '#888', maxTicksLimit: 6 }
+                    }
+                }
+            }
+        });
+        
+        // Socket event handlers
+        socket.on('connect', () => {
+            document.getElementById('connectionStatus').textContent = 'Connected';
+            document.getElementById('connectionStatus').className = 'status-badge connected';
+            socket.emit('request_history');
+        });
+        
+        socket.on('disconnect', () => {
+            document.getElementById('connectionStatus').textContent = 'Disconnected';
+            document.getElementById('connectionStatus').className = 'status-badge disconnected';
+        });
+        
+        socket.on('history', (history) => {
+            history.forEach(reading => updateDashboard(reading, false));
+            readingsCount = history.length;
+            document.getElementById('readingsCount').textContent = readingsCount;
+        });
+        
+        socket.on('new_reading', (data) => {
+            readingsCount++;
+            document.getElementById('readingsCount').textContent = readingsCount;
+            updateDashboard(data, true);
+        });
+        
+        function updateDashboard(data, animate) {
+            try {
+                console.log('Received data:', data);
+                
+                // Update ESP32 status
+                const esp32Status = document.getElementById('esp32Status');
+                esp32Status.textContent = 'ESP32: Active';
+                esp32Status.style.background = 'rgba(0, 217, 255, 0.2)';
+                esp32Status.style.color = '#00d9ff';
+                esp32Status.style.border = '1px solid #00d9ff';
+                
+                // Update purity display
+                const purity = data.predictions?.regression?.purity_percent ?? 0;
+                const purityEl = document.getElementById('purityValue');
+                purityEl.textContent = purity.toFixed(0) + '%';
+                
+                // Set color based on purity
+                purityEl.className = 'purity-value';
+                if (purity >= 75) purityEl.classList.add('');
+                else if (purity >= 50) purityEl.classList.add('warning');
+                else purityEl.classList.add('danger');
+                
+                // Update quality badge
+                const quality = data.predictions?.multiclass?.label ?? 'UNKNOWN';
+                const badge = document.getElementById('qualityBadge');
+                badge.textContent = quality;
+                badge.className = 'quality-badge quality-' + quality;
+                
+                // Update binary result
+                const binaryLabel = data.predictions?.binary?.label ?? '--';
+                const binaryConf = data.predictions?.binary?.confidence ?? 0;
+                document.getElementById('binaryResult').textContent = 
+                    `Binary: ${binaryLabel} (${binaryConf}% confidence)`;
+                
+                // Update sensor values with safe access
+                const rawFeatures = data.raw_features || {};
+                document.getElementById('mq135Aqi').textContent = 
+                    (rawFeatures.mq135_aqi ?? '--').toString();
+                document.getElementById('mq135Ratio').textContent = 
+                    (rawFeatures.mq135_ratio ?? '--').toString();
+                document.getElementById('mq3Voltage').textContent = 
+                    (rawFeatures.mq3_voltage ?? '--') + 'V';
+                document.getElementById('gasResistance').textContent = 
+                    (rawFeatures.gas_resistance_kOhm ?? '--') + 'kΩ';
+                
+                // Update probability bars with safe access
+                const probs = data.predictions?.multiclass?.probabilities || {};
+                updateProbBar('probBest', 'probBestText', probs.best ?? 0);
+                updateProbBar('probGood', 'probGoodText', probs.good ?? 0);
+                updateProbBar('probPoor', 'probPoorText', probs.poor ?? 0);
+                updateProbBar('probWorst', 'probWorstText', probs.worst ?? 0);
+                
+                // Update timestamp
+                const time = data.timestamp ? new Date(data.timestamp).toLocaleTimeString() : new Date().toLocaleTimeString();
+                document.getElementById('lastTimestamp').textContent = 'Last update: ' + time;
+                
+                // Update chart
+                timeLabels.push(time);
+                purityHistory.push(purity);
+                
+                if (timeLabels.length > maxPoints) {
+                    timeLabels.shift();
+                    purityHistory.shift();
+                }
+                
+                chart.update(animate ? 'default' : 'none');
+                
+                console.log('Dashboard updated successfully');
+            } catch (error) {
+                console.error('Error updating dashboard:', error);
+            }
+        }
+        
+        function updateProbBar(barId, textId, value) {
+            document.getElementById(barId).style.width = value + '%';
+            document.getElementById(textId).textContent = value.toFixed(1) + '%';
+        }
+    </script>
+</body>
+</html>

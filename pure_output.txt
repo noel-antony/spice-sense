@@ -1,0 +1,397 @@
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.67 °C
+   Humidity:         72.84 %
+   Gas Resistance:   33.80 kΩ
+   MQ135 Ratio:      1.4498
+   MQ3 Voltage:      1.592 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.7999  (mean: 23.62)
+   Sensor Combined:  42.0014  (mean: 49.24)
+   MQ3 Voltage:      1.5916  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: HIGH_PURITY
+   Confidence: MODERATE (near decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: BEST
+   Meaning: 🟢 Pure turmeric (~100% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 88.6%
+   Contamination:    11.4% maida
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.68 °C
+   Humidity:         72.83 %
+   Gas Resistance:   33.75 kΩ
+   MQ135 Ratio:      1.4506
+   MQ3 Voltage:      1.591 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.7970  (mean: 23.62)
+   Sensor Combined:  41.9925  (mean: 49.24)
+   MQ3 Voltage:      1.5909  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: HIGH_PURITY
+   Confidence: MODERATE (near decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: BEST
+   Meaning: 🟢 Pure turmeric (~100% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 88.6%
+   Contamination:    11.4% maida
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.68 °C
+   Humidity:         72.83 %
+   Gas Resistance:   33.75 kΩ
+   MQ135 Ratio:      1.4482
+   MQ3 Voltage:      1.593 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.8003  (mean: 23.62)
+   Sensor Combined:  41.9455  (mean: 49.24)
+   MQ3 Voltage:      1.5927  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: HIGH_PURITY
+   Confidence: MODERATE (near decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: BEST
+   Meaning: 🟢 Pure turmeric (~100% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 88.7%
+   Contamination:    11.3% maida
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.68 °C
+   Humidity:         72.83 %
+   Gas Resistance:   33.88 kΩ
+   MQ135 Ratio:      1.4476
+   MQ3 Voltage:      1.593 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.8013  (mean: 23.62)
+   Sensor Combined:  42.0005  (mean: 49.24)
+   MQ3 Voltage:      1.5931  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: HIGH_PURITY
+   Confidence: MODERATE (near decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: BEST
+   Meaning: 🟢 Pure turmeric (~100% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 88.6%
+   Contamination:    11.4% maida
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.68 °C
+   Humidity:         72.83 %
+   Gas Resistance:   33.77 kΩ
+   MQ135 Ratio:      1.4476
+   MQ3 Voltage:      1.596 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.8018  (mean: 23.62)
+   Sensor Combined:  41.9162  (mean: 49.24)
+   MQ3 Voltage:      1.5956  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: HIGH_PURITY
+   Confidence: MODERATE (near decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: BEST
+   Meaning: 🟢 Pure turmeric (~100% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 88.8%
+   Contamination:    11.2% maida
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.68 °C
+   Humidity:         72.83 %
+   Gas Resistance:   33.80 kΩ
+   MQ135 Ratio:      1.4494
+   MQ3 Voltage:      1.593 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.8035  (mean: 23.62)
+   Sensor Combined:  41.9814  (mean: 49.24)
+   MQ3 Voltage:      1.5929  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: HIGH_PURITY
+   Confidence: MODERATE (near decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: BEST
+   Meaning: 🟢 Pure turmeric (~100% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 88.6%
+   Contamination:    11.4% maida
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.69 °C
+   Humidity:         72.83 %
+   Gas Resistance:   33.69 kΩ
+   MQ135 Ratio:      1.4474
+   MQ3 Voltage:      1.601 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.8036  (mean: 23.62)
+   Sensor Combined:  41.8045  (mean: 49.24)
+   MQ3 Voltage:      1.6010  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: HIGH_PURITY
+   Confidence: MODERATE (near decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: BEST
+   Meaning: 🟢 Pure turmeric (~100% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 89.1%
+   Contamination:    10.9% maida
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.69 °C
+   Humidity:         72.83 %
+   Gas Resistance:   33.69 kΩ
+   MQ135 Ratio:      1.4432
+   MQ3 Voltage:      1.598 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.8074  (mean: 23.62)
+   Sensor Combined:  41.7983  (mean: 49.24)
+   MQ3 Voltage:      1.5982  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: HIGH_PURITY
+   Confidence: MODERATE (near decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: BEST
+   Meaning: 🟢 Pure turmeric (~100% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 89.1%
+   Contamination:    10.9% maida
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.69 °C
+   Humidity:         72.84 %
+   Gas Resistance:   33.56 kΩ
+   MQ135 Ratio:      1.4413
+   MQ3 Voltage:      1.594 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.8089  (mean: 23.62)
+   Sensor Combined:  41.7667  (mean: 49.24)
+   MQ3 Voltage:      1.5940  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: HIGH_PURITY
+   Confidence: MODERATE (near decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: BEST
+   Meaning: 🟢 Pure turmeric (~100% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 89.2%
+   Contamination:    10.8% maida
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.69 °C
+   Humidity:         72.84 %
+   Gas Resistance:   33.69 kΩ
+   MQ135 Ratio:      1.4579
+   MQ3 Voltage:      1.580 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.8124  (mean: 23.62)
+   Sensor Combined:  42.1841  (mean: 49.24)
+   MQ3 Voltage:      1.5797  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: HIGH_PURITY
+   Confidence: MODERATE (near decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: BEST
+   Meaning: 🟢 Pure turmeric (~100% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 88.1%
+   Contamination:    11.9% maida
+
+======================================================================
+
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.69 °C
+   Humidity:         72.84 %
+   Gas Resistance:   33.75 kΩ
+   MQ135 Ratio:      1.4521
+   MQ3 Voltage:      1.585 V
+
+🔬 ML FEATURES:
+   Env Stability:    23.8111  (mean: 23.62)
+   Sensor Combined:  42.0807  (mean: 49.24)
+   MQ3 Voltage:      1.5853  (mean: 1.28)
+
+----------------------------------------------------------------------
+PREDICTION RESULTS
+----------------------------------------------------------------------
+
+1️⃣  BINARY CLASSIFICATION:
+   Result: HIGH_PURITY
+   Confidence: MODERATE (near decision boundary)
+
+2️⃣  QUALITY GRADE:
+   Grade: BEST
+   Meaning: 🟢 Pure turmeric (~100% purity)
+
+3️⃣  EXACT PURITY ESTIMATION:
+   Predicted Purity: 88.4%
+   Contamination:    11.6% maida
+
+======================================================================
+
+======================================================================
+SPICE PURITY ANALYSIS
+======================================================================
+
+📊 SENSOR READINGS:
+   Temperature:      32.71 °C
+   Humidity:         72.82 %
+   Gas Resistance:   33.59 kΩ
+   MQ135 Ratio:      1.3774
+   MQ3 Voltage:      1.590 V
+
+

@@ -5,16 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌶️ Spice Sense - Login</title>
     <style>
-        :root {
-            --bg-dark: #1a1a2e;
-            --bg-card: #16213e;
-            --accent: #e94560;
-            --success: #00d9ff;
-            --warning: #ffc107;
-            --text: #eee;
-            --text-dim: #888;
-        }
-        
         * {
             margin: 0;
             padding: 0;
@@ -22,44 +12,435 @@
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
-            overflow: hidden;
+            padding: 20px;
+            animation: fadeIn 0.8s ease-out;
         }
         
-        body::before {
-            content: '';
-            position: absolute;
+        .login-container {
+            background: white;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(74, 144, 226, 0.15);
             width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(118, 75, 162, 0.2) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
+            max-width: 480px;
+            animation: slideInLeft 0.8s ease-out;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
         }
+        
+        .logo h1 {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+            color: #2d3748;
+        }
+        
+        .logo p {
+            color: #4a90e2;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #eef2f7;
+        }
+        
+        .nav-links a {
+            color: #718096;
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4a90e2;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 35px;
+            gap: 10px;
+            background: #f7fafc;
+            padding: 5px;
+            border-radius: 12px;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 14px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            background: transparent;
+            color: #718096;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 10px;
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+        }
+        
+        .tab:hover:not(.active) {
+            background: #eef2f7;
+            color: #4a90e2;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #2d3748;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: #f7fafc;
+            color: #2d3748;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #4a90e2;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+        }
+        
+        .form-group select option {
+            background: white;
+            color: #2d3748;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(74, 144, 226, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(74, 144, 226, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #4a90e2;
+            color: #4a90e2;
+            margin-top: 12px;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(74, 144, 226, 0.08);
+        }
+        
+        .btn-admin {
+            background: transparent;
+            border: 2px solid #10b981;
+            color: #10b981;
+            margin-top: 12px;
+        }
+        
+        .btn-admin:hover {
+            background: rgba(16, 185, 129, 0.08);
+        }
+        
+        .error-message, .success-message {
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .error-message {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+        }
+        
+        .success-message {
+            background: #efe;
+            border: 1px solid #cfc;
+            color: #3c3;
+        }
+        
+        .user-info {
+            text-align: center;
+            padding: 24px;
+            background: #f0f7ff;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            border: 1px solid #d4e6f9;
+        }
+        
+        .user-info .email {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #4a90e2;
+            margin-bottom: 8px;
+        }
+        
+        .user-info .role {
+            color: #718096;
+        }
+        
+        .role-badge {
+            background: #dbeafe;
+            color: #4a90e2;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>🌶️</h1>
+            <p>Spice Sense</p>
+            <div style="margin-top: 12px; color: #a0aec0; font-size: 0.9rem;">Supply Chain Traceability</div>
+            <div class="nav-links">
+                <a href="index.html">📊 Dashboard</a>
+                <span style="color: #cbd5e0;">|</span>
+                <a href="track.html">🔍 Track</a>
+            </div>
+        </div>
+        
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message"></div>
+        
+        <!-- Logged In View -->
+        <div id="loggedInView" class="hidden">
+            <div class="user-info">
+                <div class="email" id="userEmail"></div>
+                <div class="role">
+                    Role: <span id="userRole" class="role-badge"></span>
+                </div>
+            </div>
+            <button onclick="goToDashboard()" class="btn btn-primary">Go to Dashboard</button>
+            <button id="adminPanelBtn" onclick="goToAdmin()" class="btn btn-admin hidden">👑 Admin Panel</button>
+            <button onclick="logout()" class="btn btn-secondary">Logout</button>
+        </div>
+        
+        <!-- Auth Forms -->
+        <div id="authForms">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('login')">Sign In</button>
+                <button class="tab" onclick="showTab('signup')">Sign Up</button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+            
+            <!-- Signup Form -->
+            <form id="signupForm" style="display: none;" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="signupEmail" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="signupPassword" placeholder="Min 6 characters" minlength="6" required>
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="signupName" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="signupRole" required>
+                        <option value="">Select your role...</option>
+                        <option value="farmer">🚜 Farmer</option>
+                        <option value="processor">⚙️ Processor</option>
+                        <option value="tester">🔬 Quality Tester</option>
+                        <option value="distributor">🚚 Distributor</option>
+                        <option value="retailer">🏪 Retailer</option>
+                        <option value="viewer">👁️ Viewer</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyD1Mi4mYgd7ADZXJh7v6OKrxBnaPQjBoic",
+            authDomain: "spice-sense-69.firebaseapp.com",
+            projectId: "spice-sense-69",
+            storageBucket: "spice-sense-69.firebasestorage.app",
+            messagingSenderId: "726037644227",
+            appId: "1:726037644227:web:5073b5852aa0cb00bfb376"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const API_URL = 'https://spice-purity-server.onrender.com';
+
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                showLoggedInView(user);
+            } else {
+                document.getElementById('authForms').style.display = 'block';
+                document.getElementById('loggedInView').classList.add('hidden');
+            }
+        });
+
+        function showTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.tab:nth-child(${tab === 'login' ? 1 : 2})`).classList.add('active');
+            
+            document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                showSuccess('Logged in successfully!');
+            } catch (error) {
+                showError('Login failed: ' + error.message);
+            }
+        }
+
+        async function handleSignup(e) {
+            e.preventDefault();
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const name = document.getElementById('signupName').value;
+            const role = document.getElementById('signupRole').value;
+            
+            try {
+                const result = await auth.createUserWithEmailAndPassword(email, password);
+                await result.user.updateProfile({ displayName: name });
+                await result.user.getIdTokenResult();
+                showSuccess('Account created! Please sign in.');
+                setTimeout(() => showTab('login'), 1000);
+            } catch (error) {
+                showError('Signup failed: ' + error.message);
+            }
+        }
+
+        async function showLoggedInView(user) {
+            document.getElementById('authForms').style.display = 'none';
+            document.getElementById('loggedInView').classList.remove('hidden');
+            document.getElementById('userEmail').textContent = user.email;
+            
+            const tokenResult = await user.getIdTokenResult();
+            const role = tokenResult.claims.role || 'viewer';
+            document.getElementById('userRole').textContent = role.charAt(0).toUpperCase() + role.slice(1);
+            
+            if (role === 'admin') {
+                document.getElementById('adminPanelBtn').classList.remove('hidden');
+            }
+        }
+
+        function goToDashboard() {
+            window.location.href = 'index.html';
+        }
+
+        function goToAdmin() {
+            window.location.href = 'admin.html';
+        }
+
+        function logout() {
+            auth.signOut();
+            document.getElementById('authForms').style.display = 'block';
+            document.getElementById('loggedInView').classList.add('hidden');
+        }
+
+        function showError(message) {
+            const el = document.getElementById('errorMessage');
+            el.textContent = message;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        }
+
+        function showSuccess(message) {
+            const el = document.getElementById('successMessage');
+            el.textContent = message;
+            el.style.display = 'block';
+            setTimeout(() => el.style.display = 'none', 5000);
+        }
+    </script>
+</body>
+</html>
         
         .login-container {
             background: rgba(255, 255, 255, 0.95);

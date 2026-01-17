@@ -21,7 +21,7 @@
 // ============================================================
 const char* WIFI_SSID = "YOUR_WIFI_SSID";      // Your WiFi network name
 const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";  // Your WiFi password
-const char* SERVER_URL = "http://YOUR_PC_IP:5000/api/predict";  // PC server URL
+const char* SERVER_URL = "https://spice-purity-server.onrender.com/api/predict";  // Cloud server URL
 
 // ============================================================
 // PIN DEFINITIONS
